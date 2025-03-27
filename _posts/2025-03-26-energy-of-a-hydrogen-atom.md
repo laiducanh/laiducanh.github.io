@@ -1,7 +1,7 @@
 ---
 title: Energy of a Hydrogen atom
 categories: [Blogging, Tutorial]
-tags: [quantum-chemistry]
+tags: [quantum-chemistry, hydrogen-atom, atomic-wavefunction]
 math: true
 ---
 
@@ -144,6 +144,7 @@ u_1\\u_2\\u_3\\\vdots\\u_N
 \end{array}\right]=E\left[\begin{array}{cc}
 u_1\\u_2\\u_3\\\vdots\\u_N
 \end{array}\right]
+\label{eq:eigen}
 \end{equation}
 $$
 
@@ -153,7 +154,7 @@ It is pivotal to recognize the boundary conditions. The wavefunction must satisf
 
 ## Python Implementation
 
-We begin by the first matrix in Equation … involving the discretized Laplace operator and the effective potential terms in a tridiagonal matrix. This matrix represents the Hamiltonian matrix to be diagonalized in order to solve the eigenproblem. Its eigenvalues are directly the energy states $E$, and the corresponding eigenvectors $u$ are related to radial part of the hydrogen wavefunction $R$ through the simple substitution we adopted earlier, $u=rR$. Remember the matrix takes in the variables:  $r$ is the radial coordinate, and $l$ is the angular momentum number. 
+We begin by generating the first matrix in Equation \eqref{eq:eigen} involving the discretized Laplace operator and the effective potential terms in a tridiagonal matrix. This matrix represents the Hamiltonian matrix to be diagonalized in order to solve the eigenproblem. Its eigenvalues are directly the energy states $E$, and the corresponding eigenvectors $u$ are related to radial part of the hydrogen wavefunction $R$ through the simple substitution we adopted earlier, $u=rR$. Remember the matrix takes in the variables:  $r$ is the radial coordinate, and $l$ is the angular momentum number. 
 
 ```python
 import numpy as np
