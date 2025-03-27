@@ -199,3 +199,8 @@ that agrees with our numerical solutions. You can tweak the value of $l$, but th
 ![Desktop View](assets/img/posts/hydrogen_energy.png)
 
 In principal, the energy in hydrogen atoms depends only on the principal quantum number $n$. Because $n$ are integers, the energy is also quantized. In addition, the higher values of $n$, the smaller gaps between two successive energy levels. You may also notice that not all the energy levels are found, especially for higher states. This is caused by the inadequacy of a regularly spaced grid in sampling the $1/r$ potential. Ideally either a coordinate transformation, or an adaptive grid would need to be used for a better sampling.
+
+## References
+[^fn1]: Introduction to Quantum Mechanics, 3rd Edition, Griffiths, D. J. & Schroeter, D. F.
+[^fn2]: Molecular Quantum Mechanics, 5th Edition, Peter W. Atkins, Ronald S. Friedman
+[^fn3]: The Problem of the Hydrogen Atom, Part 2, https://physicspython.wordpress.com/tag/hydrogen-atom/
