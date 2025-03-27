@@ -157,7 +157,7 @@ E_n=\frac{-13.6}{n^2}\quad n=1,2,\cdots
 $$
 
 ```markdown
-![Desktop View](https://github.com/laiducanh/laiducanh.github.io/tree/master/assets/img/posts/hydrogen_energy.png)
+![Desktop View](https://github.com/laiducanh/laiducanh.github.io/tree/master/assets/img/posts/hydrogen_energy.png?raw=true)
 ```
 
 that agrees with our numerical solutions. You can tweak the value of $l$, but the same energies are obtained whatever the value of $l$, except for the removing some energy states. That’s because for any principal quantum number $n$, the permitted values of $l$ are $0,1,\cdots,n-1$. Hence, if for instance we choose $l=1$, the lowest energy solution is the one with $n=2$. 
