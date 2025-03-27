@@ -203,4 +203,4 @@ In principal, the energy in hydrogen atoms depends only on the principal quantum
 ## References
 1. Introduction to Quantum Mechanics, 3rd Edition, Griffiths, D. J. & Schroeter, D. F.
 2. Molecular Quantum Mechanics, 5th Edition, Peter W. Atkins, Ronald S. Friedman
-3. The Problem of the Hydrogen Atom, Part 2, https://physicspython.wordpress.com/tag/hydrogen-atom/
+3. The Problem of the Hydrogen Atom, Part 2, [Physics, Python, and Programming](https://physicspython.wordpress.com/tag/hydrogen-atom/)
