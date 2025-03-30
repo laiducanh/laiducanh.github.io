@@ -38,7 +38,7 @@ $$
 from scipy import special
 import numpy as np
 
-def radial_function(n, l, r):
+def radial_function(r, n, l):
     """ 
         n (int): principal quantum number
         l (int): azimuthal quantum number
@@ -67,8 +67,8 @@ P(r)=R_{nl}^2r^2
 $$
 
 ```python
-def radial_distribution(n, l, r):
-    return radial_function(n, l, r)**2 * r**2
+def radial_distribution(r, n, l):
+    return radial_function(r, n, l)**2 * r**2
 ```
 
 
@@ -89,12 +89,12 @@ where $P^m_l$ is the associated Legendre function.
 ![Spherical coordinate system](assets/img/posts/spherical_polar.png)
 
 ```python
-def angular_function(m, l, theta, phi):
+def angular_function(theta, phi, m, l):
     """ 
+        theta (numpy.ndarray): polar angle
+        phi (numpy.ndarray): azimuthal angle
         m (int): magnetic quantum number
         l (int): azimuthal quantum number
-        theta (numpy.ndarray): polar angle
-        phi (int): azimuthal angle
     """
 
     legendre = special.lpmv(m, l, np.cos(theta))
@@ -128,7 +128,7 @@ theta = np.linspace(0, np.pi, 100)
 phi = np.linspace(0, 2*np.pi, 100)
 theta, phi = np.meshgrid(theta, phi)
 
-Yml = angular_function(m, l, theta, phi)
+Yml = angular_function(theta, phi, m, l)
 
 # Compute Cartesian coordinates of the surface
 x = np.abs(Yml) * np.sin(theta) * np.cos(phi)
@@ -188,7 +188,7 @@ theta = np.arccos(z / (r + eps))
 phi = np.arctan(y / (x + eps))
 
 # Ψnlm(r,θ,φ) = Rnl(r).Ylm(θ,φ)
-psi = radial_function(n, l, r) * angular_function(m, l, theta, phi)
+psi = radial_function(r, n, l) * angular_function(theta, phi, m, l)
 
 # probability density
 psi2 = psi ** 2
