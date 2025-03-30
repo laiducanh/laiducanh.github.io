@@ -1,5 +1,5 @@
 ---
-title: Announcement 01: My first blog has arrived at Github Pages
+title: "Announcement 01: My first blog has arrived at Github Pages"
 categories: [Announcement]
 ---
 
