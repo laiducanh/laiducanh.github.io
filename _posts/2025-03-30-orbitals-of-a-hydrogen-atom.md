@@ -167,39 +167,40 @@ The angular wavefunction for the $1s$ orbital is constant for any values of $\th
 
 ## Total wavefunction
 
-The radial part considers the distance from the nucleus, whereas the angular part characterize the spatial distribution. Together, they define the total wavefunction describing the electron’s behavior in the atom’s vicinity. Visualizing the hydrogenic wavefunctions is not easy. Chemists like to draw contour density plots, in which the color mapping of the cloud is proportional to $|\psi|^2$ which represents the probability density of the electrons’ presence in different regions of the atom. We can generate such a plot by taking a slice of $|\psi|^2$. Here we will plot the density in $xz$ plane, where the azimuthal angle $\phi=0$.
+The radial part considers the distance from the nucleus, whereas the angular part characterize the spatial distribution. Together, they define the total wavefunction describing the electron’s behavior in the atom’s vicinity. Visualizing the hydrogenic wavefunctions is not easy. Chemists like to draw contour density plots, in which the color mapping of the cloud is proportional to $\psi^2$ which represents the probability density of the electrons’ presence in different regions of the atom. We can generate such a plot by taking a slice of $\psi^2$. Here we will plot the density in $xz$ plane, where the azimuthal angle $\phi=0$.
 
 ```python
 import matplotlib.pyplot as plt
 
-def contour(n, l, m, ax):
-    # define quantum numbers
-    # n, l, m = 3,2,0
+# define quantum numbers
+n, l, m = 3,2,0
 
-    # construct grid points
-    radial_extent = 50 # increase for high states
-    resolution = 100 # smooth the grid
-    x = z = np.linspace(-radial_extent, radial_extent, resolution)
-    y = 0 # xz plane
-    x, z = np.meshgrid(x, z)
-    # transform from Cartesian to spherical coordinate
-    r = np.sqrt((x**2 + y**2 + z**2))
-    eps = np.finfo(float).eps # Use epsilon to avoid division by zero during angle calculations
-    theta = np.arccos(z / (r + eps))
-    phi = np.arctan(y / (x + eps))
+# construct grid points
+radial_extent = 50 # increase for high states
+resolution = 100 # smooth the grid
+x = z = np.linspace(-radial_extent, radial_extent, resolution)
+y = 0 # xz plane
+x, z = np.meshgrid(x, z)
+# transform from Cartesian to spherical coordinate
+r = np.sqrt((x**2 + y**2 + z**2))
+eps = np.finfo(float).eps # Use epsilon to avoid division by zero during angle calculations
+theta = np.arccos(z / (r + eps))
+phi = np.arctan(y / (x + eps))
 
-    # Ψnlm(r,θ,φ) = Rnl(r).Ylm(θ,φ)
-    psi = radial_function(n, l, r) * angular_function(m, l, theta, phi)
+# Ψnlm(r,θ,φ) = Rnl(r).Ylm(θ,φ)
+psi = radial_function(n, l, r) * angular_function(m, l, theta, phi)
 
-    # probability density
-    psi2 = psi ** 2
+# probability density
+psi2 = psi ** 2
 
-    # Find contours
-    c = ax.contourf(psi2, cmap="magma")
-    cbar = fig.colorbar(c)
-    ax.set_xticks([])
-    ax.set_yticks([])
-    ax.set_title(f"n = {n}, l = {l}, m = {m}")
+fig = plt.figure()
+ax = fig.add_subplot()
+# Find contours and plot
+c = ax.contourf(psi2, cmap="magma")
+cbar = fig.colorbar(c)
+ax.set_xticks([])
+ax.set_yticks([])
+ax.set_title(f"n = {n}, l = {l}, m = {m}")
 ```
 
 ![Total wavefunction](assets/img/posts/total_hydrogen_wf.png)
