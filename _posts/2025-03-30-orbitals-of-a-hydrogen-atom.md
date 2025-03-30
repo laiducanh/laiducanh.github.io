@@ -161,7 +161,7 @@ ax.set_aspect("equal")
 ax.set_title(f"l = {l}, m = {m}")
 ```
 
-![Angular wavefunction](assets\img\posts\angular_function.png)
+![Angular wavefunction](assets/img/posts/angular_function.png)
 
 The angular wavefunction for the $1s$ orbital is constant for any values of $\theta$ and $\phi$. In this case, the angular dependence drops out and the wavefunction is spherically symmetric. This feature stems from its lack of orbital angular momentum. When $l\neq0$, the hydrogen angular wavefunctions are not spherically symmetric; they depend on $\theta$ and $\phi$, leading to unique orientation of the wavefunctions. 
 
@@ -202,7 +202,7 @@ def contour(n, l, m, ax):
     ax.set_title(f"n = {n}, l = {l}, m = {m}")
 ```
 
-![Total wavefunction](assets\img\posts\total_hydrogen_wf.png)
+![Total wavefunction](assets/img/posts/total_hydrogen_wf.png)
 
 ## References
 1. Introduction to Quantum Mechanics, 3rd Edition, Griffiths, D. J. & Schroeter, D. F.
