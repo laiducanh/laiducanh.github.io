@@ -203,3 +203,8 @@ def contour(n, l, m, ax):
 ```
 
 ![Total wavefunction](assets\img\posts\total_hydrogen_wf.png)
+
+## References
+1. Introduction to Quantum Mechanics, 3rd Edition, Griffiths, D. J. & Schroeter, D. F.
+2. Molecular Quantum Mechanics, 5th Edition, Peter W. Atkins, Ronald S. Friedman
+3. [Quantum Mechanics with Python: Hydrogen Wavefunctions and Electron Density Plots](https://ssebastianmag.medium.com/computational-physics-with-python-hydrogen-wavefunctions-electron-density-plots-8fede44b7b12)
