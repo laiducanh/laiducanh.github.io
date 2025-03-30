@@ -197,7 +197,7 @@ $$
 
 that agrees with our numerical solutions. You can tweak the value of $l$, but the same energies are obtained whatever the value of $l$, except for the removing some energy states. That’s because for any principal quantum number $n$, the permitted values of $l$ are $0,1,\cdots,n-1$. Hence, if for instance we choose $l=1$, the lowest energy solution is the one with $n=2$. 
 
-![Desktop View](assets/img/posts/hydrogen_energy.png)
+![Hydrogen energy levels](assets/img/posts/hydrogen_energy.png)
 
 In principal, the energy in hydrogen atoms depends only on the principal quantum number $n$. Because $n$ are integers, the energy is also quantized. In addition, the higher values of $n$, the smaller gaps between two successive energy levels. You may also notice that not all the energy levels are found, especially for higher states. This is caused by the inadequacy of a regularly spaced grid in sampling the $1/r$ potential. Ideally either a coordinate transformation, or an adaptive grid would need to be used for a better sampling.
 
