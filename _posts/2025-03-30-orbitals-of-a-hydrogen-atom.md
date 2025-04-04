@@ -205,6 +205,68 @@ ax.set_title(f"n = {n}, l = {l}, m = {m}")
 
 ![Total wavefunction](assets/img/posts/total_hydrogen_wf.png)
 
+Alternatively, orbitals can be visualized in surfaces, similar to how we did for the angular wavefunctions. Recall that the square of the orbital at a particular point in space represents a probability density. As such, we can map values of the square of each orbital on a grid in 3-dimensional space, and then pick a threshold of probability density, and plot that as a contour surface. That surface is called an “isodensity” surface. To generate an isosurface from the probability density, we need to identify a grid of points where the density equals to a specific constant. A common algorithm for extracting isosurfaces from volumetric data is marching cubes, where cubic objects are iteratively checked if the surface pass through. In Python, the algorithm is implemented in skimage.measure.marching_cubes() function. For those who have not installed skimage package, please refer to the [instruction](https://scikit-image.org/docs/stable/user_guide/install.html). 
+
+```python
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+from skimage.measure import marching_cubes
+
+# define quantum numbers
+n, l, m = 3,2,0
+
+# construct grid points
+radial_extent = 30 # increase for high states
+resolution = 100 # smooth the grid
+x = y = z = np.linspace(-radial_extent, radial_extent, resolution)
+x, y, z = np.meshgrid(x, y, z)
+
+# transform from Cartesian to spherical coordinate
+r = np.sqrt((x**2 + y**2 + z**2))
+eps = np.finfo(float).eps # Use epsilon to avoid division by zero during angle calculations
+theta = np.arccos(z / (r + eps))
+phi = np.arctan(y / (x + eps))
+
+# Ψnlm(r,θ,φ) = Rnl(r).Ylm(θ,φ)
+psi = radial_function(r, n, l) * angular_function(theta, phi, m, l)
+
+# probability density
+psi2 = psi ** 2
+
+# define threshold within (0.0, 1.0) to construct isodensity surface
+threshold = 0.15
+level = (np.max(psi2)-np.min(psi2))*threshold + np.min(psi2)
+verts, faces, normals, values = marching_cubes(psi2, level=level)
+
+# Display resulting triangular mesh using Matplotlib
+fig = plt.figure()
+ax = fig.add_subplot(projection='3d')
+
+# Fancy indexing: `verts[faces]` to generate a collection of triangles
+mesh = Poly3DCollection(verts[faces], facecolors='#990a00', shade=True)
+ax.add_collection3d(mesh)
+ax.set_aspect('equal')
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+# make the panes transparent
+ax.xaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+ax.yaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+ax.zaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+# make the grid lines transparent
+ax.xaxis._axinfo["grid"]['color'] =  (1,1,1,0)
+ax.yaxis._axinfo["grid"]['color'] =  (1,1,1,0)
+ax.zaxis._axinfo["grid"]['color'] =  (1,1,1,0)
+# make the ticks invisible
+ax.set_xticks([])
+ax.set_yticks([])
+ax.set_zticks([])
+ax.set_aspect("equal")
+ax.set_title(f"n = {n}, l = {l}, m = {m}")
+```
+
+![Isosurface](assets/img/posts/isosurface.png)
+
 ## References
 1. Introduction to Quantum Mechanics, 3rd Edition, Griffiths, D. J. & Schroeter, D. F.
 2. Molecular Quantum Mechanics, 5th Edition, Peter W. Atkins, Ronald S. Friedman
