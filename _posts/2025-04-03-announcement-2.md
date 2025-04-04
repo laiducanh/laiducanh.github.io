@@ -1,5 +1,5 @@
 ---
-title: "Announcement #02: Update to the article *Orbitals of a Hydrogen atom*"
+title: "Announcement #02: Update to the article <em>Orbitals of a Hydrogen atom<em>"
 categories: [Announcement]
 ---
 
