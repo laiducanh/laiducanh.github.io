@@ -43,7 +43,7 @@ There are appearances of molecular integrals:
 - Kinetic energy integrals: $T_{\mu\nu}=-\frac{1}{2}\int_{-\infty}^{\infty}\phi_\mu^*(1)\nabla_1^2\phi_\nu(1) d\tau$
 - Nuclear attraction integrals: $V_{\mu\nu}=\int_{-\infty}^{\infty}\phi_\mu^*(1)\bigg(-\sum_{A}\frac{Z_A}{r_{1A}}\bigg)\phi_\nu(1) d\tau$
 - Core Hamiltonian: $h_{\mu\nu}=T_{\mu\nu}+V_{\mu\nu}$
-- Two-electron repulsion integrals: $g_{\mu\nu\rho\sigma}=\int_{-\infty}^{\infty}{\phi_\mu^*(1)\phi_\nu^*(1)\frac{1}{r_{12}}\phi_\rho(2)\phi_\sigma(2)}d\tau d\tau$
+- Two-electron repulsion integrals: $g_{\mu\nu\rho\sigma}=\int_{-\infty}^{\infty}{\phi_\mu^*(1)\phi_\nu^*(1)$
 
 For the purpose of this article, we will not discuss the evaluation of these integrals. We will assume that they have already computed and stored in corresponding data files below.
 
@@ -88,8 +88,8 @@ atoms = ['O', 'H', 'H']
 charges = [Z[atom] for atom in atoms]
 coords = coords = np.array(
     [[0.0000000,  0.0000000,  0.1230031],
-	 [0.0000000, -1.4194774, -0.9760738],
-	 [0.0000000,  1.4194774, -0.9760738]]
+	   [0.0000000, -1.4194774, -0.9760738],
+	   [0.0000000,  1.4194774, -0.9760738]]
 )
 nao = S.shape[0] # number of basis functions
 nelec = 10 # number of electrons
