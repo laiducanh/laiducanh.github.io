@@ -56,6 +56,7 @@ For the purpose of this article, we will not discuss the evaluation of these int
 ## Implementation step by step
 
 ```python
+
 import numpy as np
 import math
 from scipy import linalg
@@ -81,6 +82,7 @@ $$
 We will initial the data for the molecule with lists of atoms, coordinates, and charges. Since we use the STO-3G basis set, there are 7 basis functions for the water molecule. 
 
 ```python
+
 ## dictionary: name --> atomic number
 Z = {'H':1,'He':2,'Li':3,'Be':4,'B':5,'C':6,'N':7,'O':8,'F':9,'Ne':10}
 
@@ -88,8 +90,8 @@ atoms = ['O', 'H', 'H']
 charges = [Z[atom] for atom in atoms]
 coords = coords = np.array(
     [[0.0000000,  0.0000000,  0.1230031],
-	   [0.0000000, -1.4194774, -0.9760738],
-	   [0.0000000,  1.4194774, -0.9760738]]
+     [0.0000000, -1.4194774, -0.9760738],
+     [0.0000000,  1.4194774, -0.9760738]]
 )
 nao = S.shape[0] # number of basis functions
 nelec = 10 # number of electrons
@@ -139,6 +141,7 @@ $$
 In the end of a Hartree-Fock calculation, we want to find a set of molecular orbitals determined by coefficient matrix $\mathbf C$, and the eigen-energy matrix $\varepsilon$ of the molecular orbitals through the Roothan-Hall equations. However, each element of the Fock matrix $\mathbf F$ is calculated from the density matrix which is defined in terms of the coefficient matrix $\mathbf C$. It looks like we are faced with a dilemma: the point of calculating $\mathbf F$ is to get $\mathbf C$, but to get $\mathbf F$ we need $\mathbf C$. Let us try with a guess for density matrix, then solve the Roothaan-Hall equation to get a solution. In this case, we have no information on what the density may look like, but we know it should be a $m\times m$ matrix where $m$ is the number of basis functions. The simplest thing to do is simply to start out with a null density matrix: $\mathbf{D=0}$, which is so-called the core Hamiltonian guess. 
 
 ```python
+
 def make_guess(nao:int):
     # create an empty naoxnao density matrix;
     D = np.zeros((nao,nao)) 
@@ -157,7 +160,7 @@ def buildF(H, G, D):
     ## ... initialize the naoxnao matrix P which is the two-electron contribution ...
     ## ... calculate the two-electron contribution ...
     ## ... by contracting the density matrix with the two-electron integrals
-	  nao = H.shape[0]
+    nao = H.shape[0]
     P = np.zeros((nao,nao)) 
     for m in range(nao):
         for n in range(nao):
@@ -190,6 +193,7 @@ $$
 In this article, I follow the Lowdin orthogonalization process, also known as symmetric orthogonalization, where $\mathbf{X}=\mathbf{S}^{-1/2}$.
 
 ```python
+
 # generate transformation matrix X
 X = linalg.sqrtm(linalg.inv(S)) 
 ```
@@ -215,6 +219,7 @@ $$
 which can be diagonalized to give $\mathbf C'$ and $\varepsilon$. Transformation of $\mathbf{C'}$ to $\mathbf{C}$ gives the coefficients $c_{\mu i}$ in the expansion of the MO’s $\psi$ in terms of basis functions $\phi$. 
 
 ```python
+
 # Solve the Roothaan-Hall equation
 Fp = X @ F @ X
 e, Cp = np.linalg.eigh(Fp)
@@ -224,6 +229,7 @@ C = X @ Cp
 Let see how the density matrix $\mathbf D$ changes from the initial guess
 
 ```python
+
 nelec = 10 # number of electrons 
 
 # save the old density matrix for comparison
@@ -231,10 +237,10 @@ D_old = D.copy()
 
 # form a new density matrix D from the molecular orbitals C 
 for m in range(nao):
-  for n in range(nao):
-    D[m,n] = 0.0
-    for a in range(int(nelec/2)):
-      D[m,n] += 2 * (C[m,a] * C[n,a])
+    for n in range(nao):
+        D[m,n] = 0.0
+        for a in range(int(nelec/2)):
+            D[m,n] += 2 * (C[m,a] * C[n,a])
 ```
 
 Obviously, the new density matrix is not zero. Is this new density matrix better than our initial guess? If you plug the initial guess $\mathbf{D=0}$ into the equation \eqref{eq:fock2} the Fock matrix element is $F_{\mu\nu}=h_{\mu\nu}$ (that’s why it is called the core Hamiltonian guess). Physically, this means that the electrons have the correct kinetic energy and attraction with the nuclei, but do not interact with the other electrons at all. This is a much harsher approximation than the Hartree-Fock approximation, of course, and gives a very poor description of the molecule. Therefore, a non-zero density matrix does take some electron correlations into account. As a result, we have improved our density. But we will wonder is the new density matrix the best density we can have? I am not sure. So let us try with a new iteration, which we initialize the density matrix with the current density matrix. Technically, we will do iteratively several cycles until the solution looks “similar” to the guess. It means we cannot further improve the density from the guess, and we have met the convergence. In other words, the solution of the Roothaan-Hall equations must be self-consistent
@@ -246,6 +252,7 @@ $$
 As we continue the self-consistent Hartree-Fock procedure, we have to have some measures for how close to self-consistency (and hence the optimal Hartree-Fock energy) we are. In this implementation, I will use the maximum error (MAXE) that computes the largest difference between two density matrices in consecutive iterations.
 
 ```python
+
 # Calculate convergence
 conv = np.max(np.abs(D - D_old))
 ```
@@ -267,25 +274,26 @@ E_{total}=E_{el}+\sum_{B>A}^N  \frac{Z_AZ_B}{R_{AB}}
 $$
 
 ```python
+
 def nuclear_repulsion(charges, coords):
-	# nuclear repulsion energy in Hartree
-	Vnn = 0.0
-	for a, A in enumerate(charges):
-		for b, B in enumerate(charges):
-			if b > a:
-				R = math.sqrt(
-					(coords[a][0] - coords[b][0])**2 +
-					(coords[a][1] - coords[b][1])**2 +
-					(coords[a][2] - coords[b][2])**2
-				)
-				Vnn += A * B / R
-	return Vnn
+    # nuclear repulsion energy in Hartree
+    Vnn = 0.0
+    for a, A in enumerate(charges):
+    for b, B in enumerate(charges):
+        if b > a:
+            R = math.sqrt(
+                (coords[a][0] - coords[b][0])**2 +
+                (coords[a][1] - coords[b][1])**2 +
+                (coords[a][2] - coords[b][2])**2
+            )
+            Vnn += A * B / R
+    return Vnn
 
 # calculate the electronic energy, an expectation value 
 Eel = 0.0
 for m in range(nao):
-  for n in range(nao):
-    Eel += 0.5 * D[n,m] * (H[m,n] + F[m,n])
+    for n in range(nao):
+        Eel += 0.5 * D[n,m] * (H[m,n] + F[m,n])
     
 # calculate the total energy
 E = Eel + nuclear_repulsion(charges, coords)
@@ -296,6 +304,7 @@ E = Eel + nuclear_repulsion(charges, coords)
 In order to start a Hartree-Fock procedure, we just have to put what we have done in a loop to run over a predefined number of iterations.
 
 ```python
+
 import numpy as np
 from scipy import linalg
 
@@ -320,45 +329,45 @@ D = make_guess(nao)
 
 for iter in range(scf_max_iter+1):
     	
-	# Calculate the Fock matrix
-	F = buildF(H, G, D)
+    # Calculate the Fock matrix
+    F = buildF(H, G, D)
 	
-	# Solve the Roothaan-Hall equation
-	Fp = X @ F @ X
-	e, Cp = np.linalg.eigh(Fp)
-	C = X @ Cp
-	
-	# calculate the electronic energy, an expectation value 
-	Eel = 0.0
-	for m in range(nao):
-		for n in range(nao):
-			Eel += 0.5 * D[n,m] * (H[m,n] + F[m,n])
-	
-	# calculate the total energy
-	E = Eel + nuclear_repulsion(charges, coords)
-	
-	# save the old density matrix for comparison
-	D_old = D.copy()
-	
-	# form a new density matrix D from the molecular orbitals C 
-	for m in range(nao):
-		for n in range(nao):
-			D[m,n] = 0.0
-			for a in range(int(nelec/2)):
-				D[m,n] += 2 * (C[m,a] * C[n,a])
-	
-	# Calculate convergence
-	conv = np.max(np.abs(D - D_old))
-	
-	# skip 1th iter
-	if iter > 0:
-		print(f'Iteration {iter:3}: energy = {E:12.10f}, convergence = {conv:10.4e}')
-	
-	if iter > 0 and conv <= conv_tol:
-		print(f"The calculation is converged after {iter:3} iterations.")
-		break 
-	if iter == scf_max_iter and conv > conv_tol:
-			print("The calculation is not converged!")
+  	# Solve the Roothaan-Hall equation
+  	Fp = X @ F @ X
+  	e, Cp = np.linalg.eigh(Fp)
+  	C = X @ Cp  
+  	
+  	# calculate the electronic energy, an expectation value 
+  	Eel = 0.0
+  	for m in range(nao):
+        for n in range(nao):
+  			    Eel += 0.5 * D[n,m] * (H[m,n] + F[m,n])
+  	
+  	# calculate the total energy
+  	E = Eel + nuclear_repulsion(charges, coords)
+  	
+  	# save the old density matrix for comparison
+  	D_old = D.copy()
+  	
+  	# form a new density matrix D from the molecular orbitals C 
+  	for m in range(nao):
+        for n in range(nao):
+  			    D[m,n] = 0.0
+  			    for a in range(int(nelec/2)):
+                D[m,n] += 2 * (C[m,a] * C[n,a])
+  	
+  	# Calculate convergence
+  	conv = np.max(np.abs(D - D_old))
+  	
+  	# skip 1th iter
+  	if iter > 0:
+  		  print(f'Iteration {iter:3}: energy = {E:12.10f}, convergence = {conv:10.4e}')
+  	
+  	if iter > 0 and conv <= conv_tol:
+        print(f"The calculation is converged after {iter:3} iterations.")
+        break 
+  	if iter == scf_max_iter and conv > conv_tol:
+        print("The calculation is not converged!")  
 		   
 ```
 
