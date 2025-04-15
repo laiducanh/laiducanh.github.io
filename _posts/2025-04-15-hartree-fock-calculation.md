@@ -48,11 +48,11 @@ There are appearances of molecular integrals:
 
 For the purpose of this article, we will not discuss the evaluation of these integrals. We will assume that they have already computed and stored in corresponding data files below.
 
-- [Overlap integrals]()
-- [Kinetic integrals]()
-- [Nuclear attraction integrals]()
-- [One-electron Hamiltonian]()
-- [Two-electron integrals]()
+- [Overlap integrals](https://laiducanh/laiducanh.github.io/blob/master/assets/data/intergrals/S.h2o.sto3g.npy)
+- [Kinetic integrals](https://laiducanh/laiducanh.github.io/blob/master/assets/data/intergrals/T.h2o.sto3g.npy)
+- [Nuclear attraction integrals](https://laiducanh/laiducanh.github.io/blob/master/assets/data/intergrals/V.h2o.sto3g.npy)
+- [One-electron Hamiltonian](https://laiducanh/laiducanh.github.io/blob/master/assets/data/intergrals/H.h2o.sto3g.npy)
+- [Two-electron integrals](https://laiducanh/laiducanh.github.io/blob/master/assets/data/intergrals/G.h2o.sto3g.npy)
 
 ## Implementation step by step
 
