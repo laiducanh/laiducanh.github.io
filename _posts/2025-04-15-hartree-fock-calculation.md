@@ -54,6 +54,8 @@ For the purpose of this article, we will not discuss the evaluation of these int
 - [One-electron Hamiltonian]()
 - [Two-electron integrals]()
 
+## Implementation step by step
+
 ```python
 import numpy as np
 import math
@@ -289,6 +291,8 @@ for m in range(nao):
 E = Eel + nuclear_repulsion(charges, coords)
 ```
 
+## Complete SCF procedure
+
 In order to start a Hartree-Fock procedure, we just have to put what we have done in a loop to run over a predefined number of iterations.
 
 ```python
@@ -360,7 +364,7 @@ for iter in range(scf_max_iter+1):
 
 We obtain the energy at each step in SCF procedure as follows
 
-<aside>
+>
 
 Iteration   1: energy = -73.2285323930, convergence = 1.7533e+00
 Iteration   2: energy = -74.9466685767, convergence = 1.3779e-01
@@ -385,18 +389,9 @@ Iteration  20: energy = -74.9617541626, convergence = 1.4250e-08
 Iteration  21: energy = -74.9617541626, convergence = 6.1417e-09
 The calculation is converged after  21 iterations.
 
-</aside>
-
 Although our initial guess is not great, the SCF procedure gradually improves the density and the wavefunction. The first iteration yields an energy of approximately -73.22853 Hartree, and the second iteraction lowered this significantly to -74.94667 Hartree, gaining roughly 1.72 Hartree (or 1079 kcal/mol, a huge improvement!) of additional stabilization. By the 21st iteration, the total energy converges to -74.9617541626 Hartree, with differences in the density matrix on the order of `1e-9`. While the total energy appears to converge by the 14th iteration, the density matrix had not fully converged yet, highlighting that the change in the density matrix is a more sensitive and reliable indicator for SCF convergence. 
 
 Unpack the eigenvalues of the final Fock matrix, we obtain the energy of each molecular orbitals in Hartree, i.e., the energy of one electron in the orbital. 
-
-```python
-for idx, energy in enumerate(e):
-	print(f"MO #{idx+1}: energy = {energy}.")
-```
-
-<aside>
 
 MO #1: energy = -20.235119550139746.
 MO #2: energy = -1.26077940974714.
@@ -406,6 +401,8 @@ MO #5: energy = -0.38717843286589276.
 MO #6: energy = 0.592813447584928.
 MO #7: energy = 0.7522187844865371.
 
-</aside>
-
 Notice that the sum of all of the occupied MO energies yields a higher electronic energy because electron-electron repulsion is double counted. Additionally, the five occupied MOs all have negative energies. So, their electrons are bound within the molecule. The unoccupied MOs (called “virtual” MOs) all have positive energies, meaning that the molecule will not spontaneously accept an electron from another source.
+
+## References
+1. "Hartree Fock theory" lecture notes from Professor Devin Matthews (SMU).
+2. [Hartree-Fock Calculation for Water](https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/The_Live_Textbook_of_Physical_Chemistry_(Peverati)/28%3A_The_Chemical_Bond_in_Polyatomic_Molecules/28.02%3A_Hartree-Fock_Calculation_for_Water)
