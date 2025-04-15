@@ -23,12 +23,12 @@ The core process in the Hartree-Fock calculation is to solve Roothaan-Hall equat
 
 $$
 \begin{equation}
-\bold{FC=SC\varepsilon}
+\mathbf{FC=SC\varepsilon}
 \label{eq:roothaan-hall}
 \end{equation}
 $$
 
-where $\mathbf F$ is the Fock matrix, $\mathbf C$ is the matrix of coefficients that determines the molecular orbitals, $\mathbf S$ is the overlap matrix, and $\varepsilon$ contains the eigen-energies of the molecular orbitals. Here $\mathbf F$**, $\mathbf C$** and $\mathbf S$ would have to be $m\times m$ matrices, where $m$ is the number of basis functions. Since there are $m^2$ $*F*$’s, $*c*$’s and $*S*$’s, so $\bold{\varepsilon}$ would be an $m\times m$ diagonal matrix with the nonzero elements $\varepsilon_1, \varepsilon_2,...,\varepsilon_m$. The central task in Hartree-Fock method is to build the Fock matrix, whose elements are computed as follows
+where $\mathbf F$ is the Fock matrix, $\mathbf C$ is the matrix of coefficients that determines the molecular orbitals, $\mathbf S$ is the overlap matrix, and $\varepsilon$ contains the eigen-energies of the molecular orbitals. Here $\mathbf F$**, $\mathbf C$** and $\mathbf S$ would have to be $m\times m$ matrices, where $m$ is the number of basis functions. Since there are $m^2$ $*F*$’s, $*c*$’s and $*S*$’s, so ${\varepsilon}$ would be an $m\times m$ diagonal matrix with the nonzero elements $\varepsilon_1, \varepsilon_2,...,\varepsilon_m$. The central task in Hartree-Fock method is to build the Fock matrix, whose elements are computed as follows
 
 $$
 \begin{equation}
@@ -137,7 +137,7 @@ F_{\mu\nu}=h_{\mu\nu}+\sum_{\rho,\sigma}^mD_{\rho\sigma}\left(g_{\mu\nu\rho\sigm
 \end{equation}
 $$
 
-In the end of a Hartree-Fock calculation, we want to find a set of molecular orbitals determined by coefficient matrix $\mathbf C$, and the eigen-energy matrix $\varepsilon$ of the molecular orbitals through the Roothan-Hall equations. However, each element of the Fock matrix $\mathbf F$ is calculated from the density matrix which is defined in terms of the coefficient matrix $\mathbf C$. It looks like we are faced with a dilemma: the point of calculating $\mathbf F$ is to get $\mathbf C$, but to get $\mathbf F$ we need $\mathbf C$. Let us try with a guess for density matrix, then solve the Roothaan-Hall equation to get a solution. In this case, we have no information on what the density may look like, but we know it should be a $m\times m$ matrix where $m$ is the number of basis functions. The simplest thing to do is simply to start out with a null density matrix: $\bold{D=0}$, which is so-called the core Hamiltonian guess. 
+In the end of a Hartree-Fock calculation, we want to find a set of molecular orbitals determined by coefficient matrix $\mathbf C$, and the eigen-energy matrix $\varepsilon$ of the molecular orbitals through the Roothan-Hall equations. However, each element of the Fock matrix $\mathbf F$ is calculated from the density matrix which is defined in terms of the coefficient matrix $\mathbf C$. It looks like we are faced with a dilemma: the point of calculating $\mathbf F$ is to get $\mathbf C$, but to get $\mathbf F$ we need $\mathbf C$. Let us try with a guess for density matrix, then solve the Roothaan-Hall equation to get a solution. In this case, we have no information on what the density may look like, but we know it should be a $m\times m$ matrix where $m$ is the number of basis functions. The simplest thing to do is simply to start out with a null density matrix: $\mathbf{D=0}$, which is so-called the core Hamiltonian guess. 
 
 ```python
 def make_guess(nao:int):
@@ -187,7 +187,7 @@ $$
 \end{equation}
 $$
 
-In this article, I follow the Lowdin orthogonalization process, also known as symmetric orthogonalization, where $\bold{X}=\bold{S}^{-1/2}$.
+In this article, I follow the Lowdin orthogonalization process, also known as symmetric orthogonalization, where $\mathbf{X}=\mathbf{S}^{-1/2}$.
 
 ```python
 # generate transformation matrix X
@@ -197,10 +197,10 @@ X = linalg.sqrtm(linalg.inv(S))
 We can modify the Roothaan-Hall equations to use these orthogonal coefficients by using the resolution of the identity $\mathbf{I=S^{-1/2}S^{1/2}}$
 
 $$
-\begin{aligned}\bold{F}\bold{C}&=\bold{S}\bold{C}\bold{\varepsilon}\\\bold{F}\bold{S}^{-1/2}\bold{S}^{1/2}\bold{C}&=\bold{S}\bold{S}^{-1/2}\bold{S}^{1/2}\bold{C}\bold{\varepsilon}\\
-\bold{F}\bold{S}^{-1/2}{\bold{C}'}&=\bold{S}^{1/2}{\bold{C}'}\bold{\varepsilon}\\
-\bold{S}^{-1/2}\bold{F}\bold{S}^{-1/2}{\bold{C}'}&=\bold{S}^{-1/2}\bold{S}^{1/2}{\bold{C}'}\bold{\varepsilon}\\
-{\bold{F}'}{\bold{C}'}&={\bold{C}'}\bold{\varepsilon}
+\begin{aligned}\mathbf{FC}&=\mathbf{SC\varepsilon}\\\mathbf{F}\mathbf{S}^{-1/2}\mathbf{S}^{1/2}\mathbf{C}&=\mathbf{S}\mathbf{S}^{-1/2}\mathbf{S}^{1/2}\mathbf{C}\mathbf{\varepsilon}\\
+\mathbf{F}\mathbf{S}^{-1/2}{\mathbf{C}'}&=\mathbf{S}^{1/2}{\mathbf{C}'}\mathbf{\varepsilon}\\
+\mathbf{S}^{-1/2}\mathbf{F}\mathbf{S}^{-1/2}{\mathbf{C}'}&=\mathbf{S}^{-1/2}\mathbf{S}^{1/2}{\mathbf{C}'}\mathbf{\varepsilon}\\
+{\mathbf{F}'}{\mathbf{C}'}&={\mathbf{C}'}\mathbf{\varepsilon}
 \end{aligned}
 $$
 
@@ -208,11 +208,11 @@ The transformed the Fock matrix is then defined as
 
 $$
 \begin{equation}
-\bold{F'=S^{-1/2}FS^{-1/2}}
+\mathbf{F'=S^{-1/2}FS^{-1/2}}
 \end{equation}
 $$
 
-which can be diagonalized to give $\mathbf C'$ and $\varepsilon$. Transformation of $\bold{C'}$ to $\bold{C}$ gives the coefficients $c_{\mu i}$ in the expansion of the MO’s $\psi$ in terms of basis functions $\phi$. 
+which can be diagonalized to give $\mathbf C'$ and $\varepsilon$. Transformation of $\mathbf{C'}$ to $\mathbf{C}$ gives the coefficients $c_{\mu i}$ in the expansion of the MO’s $\psi$ in terms of basis functions $\phi$. 
 
 ```python
 # Solve the Roothaan-Hall equation
@@ -240,7 +240,7 @@ for m in range(nao):
 Obviously, the new density matrix is not zero. Is this new density matrix better than our initial guess? If you plug the initial guess $\mathbf{D=0}$ into the equation \eqref{eq:fock2} the Fock matrix element is $F_{\mu\nu}=h_{\mu\nu}$ (that’s why it is called the core Hamiltonian guess). Physically, this means that the electrons have the correct kinetic energy and attraction with the nuclei, but do not interact with the other electrons at all. This is a much harsher approximation than the Hartree-Fock approximation, of course, and gives a very poor description of the molecule. Therefore, a non-zero density matrix does take some electron correlations into account. As a result, we have improved our density. But we will wonder is the new density matrix the best density we can have? I am not sure. So let us try with a new iteration, which we initialize the density matrix with the current density matrix. Technically, we will do iteratively several cycles until the solution looks “similar” to the guess. It means we cannot further improve the density from the guess, and we have met the convergence. In other words, the solution of the Roothaan-Hall equations must be self-consistent
 
 $$
-\bold{C}^{(k)} \rightarrow \bold{D}^{(k)} \rightarrow \bold{F}^{(k)} \rightarrow \bold{C}^{(k+1)} \xrightarrow{k\rightarrow\infty}\bold{C}^{(k)}
+\mathbf{C}^{(k)} \rightarrow \mathbf{D}^{(k)} \rightarrow \mathbf{F}^{(k)} \rightarrow \mathbf{C}^{(k+1)} \xrightarrow{k\rightarrow\infty}\mathbf{C}^{(k)}
 $$
 
 As we continue the self-consistent Hartree-Fock procedure, we have to have some measures for how close to self-consistency (and hence the optimal Hartree-Fock energy) we are. In this implementation, I will use the maximum error (MAXE) that computes the largest difference between two density matrices in consecutive iterations.
@@ -404,5 +404,5 @@ MO #7: energy = 0.7522187844865371.
 Notice that the sum of all of the occupied MO energies yields a higher electronic energy because electron-electron repulsion is double counted. Additionally, the five occupied MOs all have negative energies. So, their electrons are bound within the molecule. The unoccupied MOs (called “virtual” MOs) all have positive energies, meaning that the molecule will not spontaneously accept an electron from another source.
 
 ## References
-1. "Hartree Fock theory" lecture notes from Professor Devin Matthews (SMU).
+1. Lecture notes from "Hartree Fock theory" class from Professor Devin Matthews (SMU).
 2. [Hartree-Fock Calculation for Water](https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/The_Live_Textbook_of_Physical_Chemistry_(Peverati)/28%3A_The_Chemical_Bond_in_Polyatomic_Molecules/28.02%3A_Hartree-Fock_Calculation_for_Water)
