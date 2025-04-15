@@ -235,7 +235,7 @@ nelec = 10 # number of electrons
 # save the old density matrix for comparison
 D_old = D.copy()
 
-# form a new density matrix D from the molecular orbitals C 
+# form a new density matrix D from the molecular orbitals C
 for m in range(nao):
     for n in range(nao):
         D[m,n] = 0.0
@@ -279,14 +279,14 @@ def nuclear_repulsion(charges, coords):
     # nuclear repulsion energy in Hartree
     Vnn = 0.0
     for a, A in enumerate(charges):
-    for b, B in enumerate(charges):
-        if b > a:
-            R = math.sqrt(
-                (coords[a][0] - coords[b][0])**2 +
-                (coords[a][1] - coords[b][1])**2 +
-                (coords[a][2] - coords[b][2])**2
-            )
-            Vnn += A * B / R
+        for b, B in enumerate(charges):
+            if b > a:
+                R = math.sqrt(
+                    (coords[a][0] - coords[b][0])**2 +
+                    (coords[a][1] - coords[b][1])**2 +
+                    (coords[a][2] - coords[b][2])**2
+                )
+                Vnn += A * B / R
     return Vnn
 
 # calculate the electronic energy, an expectation value 
@@ -331,44 +331,44 @@ for iter in range(scf_max_iter+1):
     	
     # Calculate the Fock matrix
     F = buildF(H, G, D)
-	
-  	# Solve the Roothaan-Hall equation
-  	Fp = X @ F @ X
-  	e, Cp = np.linalg.eigh(Fp)
-  	C = X @ Cp  
-  	
-  	# calculate the electronic energy, an expectation value 
-  	Eel = 0.0
-  	for m in range(nao):
+
+    # Solve the Roothaan-Hall equation
+    Fp = X @ F @ X
+    e, Cp = np.linalg.eigh(Fp)
+    C = X @ Cp  
+
+    # calculate the electronic energy, an expectation value 
+    Eel = 0.0
+    for m in range(nao):
         for n in range(nao):
-  			    Eel += 0.5 * D[n,m] * (H[m,n] + F[m,n])
-  	
-  	# calculate the total energy
-  	E = Eel + nuclear_repulsion(charges, coords)
-  	
-  	# save the old density matrix for comparison
-  	D_old = D.copy()
-  	
-  	# form a new density matrix D from the molecular orbitals C 
-  	for m in range(nao):
+            Eel += 0.5 * D[n,m] * (H[m,n] + F[m,n])
+
+    # calculate the total energy
+    E = Eel + nuclear_repulsion(charges, coords)
+
+    # save the old density matrix for comparison
+    D_old = D.copy()
+
+    # form a new density matrix D from the molecular orbitals C 
+    for m in range(nao):
         for n in range(nao):
-  			    D[m,n] = 0.0
-  			    for a in range(int(nelec/2)):
+            D[m,n] = 0.0
+            for a in range(int(nelec/2)):
                 D[m,n] += 2 * (C[m,a] * C[n,a])
-  	
-  	# Calculate convergence
-  	conv = np.max(np.abs(D - D_old))
-  	
-  	# skip 1th iter
-  	if iter > 0:
-  		  print(f'Iteration {iter:3}: energy = {E:12.10f}, convergence = {conv:10.4e}')
-  	
-  	if iter > 0 and conv <= conv_tol:
+
+    # Calculate convergence
+    conv = np.max(np.abs(D - D_old))
+
+    # skip 1th iter
+    if iter > 0:
+        print(f'Iteration {iter:3}: energy = {E:12.10f}, convergence = {conv:10.4e}')
+
+    if iter > 0 and conv <= conv_tol:
         print(f"The calculation is converged after {iter:3} iterations.")
         break 
-  	if iter == scf_max_iter and conv > conv_tol:
+    if iter == scf_max_iter and conv > conv_tol:
         print("The calculation is not converged!")  
-		   
+
 ```
 
 We obtain the energy at each step in SCF procedure as follows
