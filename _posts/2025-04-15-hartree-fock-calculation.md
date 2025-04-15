@@ -39,12 +39,12 @@ $$
 
 There are appearances of molecular integrals:
 
-- Overlap integrals: $S_{\mu\nu}=\int_{-\infty}^{\infty}\phi_\mu^*(1)\phi_\nu(1) dxdydz$
-- Kinetic energy integrals: $T_{\mu\nu}=-\frac{1}{2}\int_{-\infty}^{\infty}\phi_\mu^*(1)\nabla_1^2\phi_\nu(1) dxdydz$
-- Nuclear attraction integrals: $V_{\mu\nu}=\int_{-\infty}^{\infty}\phi_\mu^*(1)\bigg(-\sum_{A}^N\frac{Z_A}{r_{1A}}\bigg)\phi_\nu(1) dxdydz$
+- Overlap integrals: $S_{\mu\nu}=\int_{-\infty}^{\infty}\phi_\mu^*(1)\phi_\nu(1) d\tau$
+- Kinetic energy integrals: $T_{\mu\nu}=-\frac{1}{2}\int_{-\infty}^{\infty}\phi_\mu^*(1)\nabla_1^2\phi_\nu(1) d\tau$
+- Nuclear attraction integrals: $V_{\mu\nu}=\int_{-\infty}^{\infty}\phi_\mu^*(1)\bigg(-\sum_{A}^N\frac{Z_A}{r_{1A}}\bigg)\phi_\nu(1) d\tau$
 - Core Hamiltonian: $h_{\mu\nu}=T_{\mu\nu}+V_{\mu\nu}$
 - Two-electron repulsion integrals: $g_{\mu\nu\rho\sigma}=
-\int_{-\infty}^{\infty} {\phi_\mu^*(1)\phi_\nu^*(1)\frac1{r_{12}}\phi_\rho(2)\phi_\sigma(2)}d\nu_1d\nu_2$
+\int_{-\infty}^{\infty} {\phi_\mu^*(1)\phi_\nu^*(1)\frac1{r_{12}}\phi_\rho(2)\phi_\sigma(2)}d\tau_1d\tau_2$
 
 For the purpose of this article, we will not discuss the evaluation of these integrals. We will assume that they have already computed and stored in corresponding data files below.
 
@@ -79,7 +79,7 @@ H&0.0000000&1.4194774&-0.9760738
 \end{matrix}
 $$
 
-We will initial the data for the molecule with lists of atoms, coordinates, and charges. Since we use the STO-3G basis set, there are 10 basis functions for the water molecule. 
+We will initial the data for the molecule with lists of atoms, coordinates, and charges. Since we use the STO-3G basis set, there are 7 basis functions for the water molecule. 
 
 ```python
 ## dictionary: name --> atomic number
@@ -96,7 +96,7 @@ nao = S.shape[0] # number of basis functions
 nelec = 10 # number of electrons
 ```
 
-To do so, we can use a minimal basis set composed of the following seven functions: basis function #1 is an oxygen $1s$ orbital, #2 is an oxygen $2s$ orbital, #3 is an oxygen $2p_x$ orbital, #4 is an oxygen $2p_y$ orbital, #5 is an oxygen $2p_z$ orbital, #6 is one hydrogen $1s$ orbital, and #7 is the other hydrogen $1s$ orbital. The overlap matrix is
+The basis set composes of the following seven functions: basis function #1 is an oxygen $1s$ orbital, #2 is an oxygen $2s$ orbital, #3 is an oxygen $2p_x$ orbital, #4 is an oxygen $2p_y$ orbital, #5 is an oxygen $2p_z$ orbital, #6 is one hydrogen $1s$ orbital, and #7 is the other hydrogen $1s$ orbital. The overlap matrix is
 
 $$
 \mathbf{S}=\begin{bmatrix} \mathrm{O}\;1s & \mathrm{O}\;2s & \mathrm{O}\;2p_x & \mathrm{O}\;2p_y & \mathrm{O}\;2p_z & \mathrm{H}_a\;1s & \mathrm{H}_b\;1s & \\\ 1.000 & & & & & & &\mathrm{O}\;1s \\\ 0.237 & 1.000 & & & & & &\mathrm{O}\;2s \\\ 0.000 & 0.000 & 1.000 & & & & &\mathrm{O}\;2p_x \\\ 0.000 & 0.000 & 0.000 & 1.000 & & & &\mathrm{O}\;2p_y \\\ 0.000 & 0.000 & 0.000 & 0.000 & 1.000 & & &\mathrm{O}\;2p_z \\\ 0.055 & 0.480 & 0.000 & -0.313 & -0.242 & 1.000 & &\mathrm{H}_a\;1s \\\ 0.055 & 0.480 & 0.000 & 0.313 & -0.242 & 0.256 & 1.000&\mathrm{H}_b\;1s \end{bmatrix}
@@ -175,7 +175,7 @@ The Roothaan-Hall matrix equations (equation \eqref{eq:roothaan-hall}) looks rea
 
 $$
 \begin{equation}
-\widehat{\phi}_\mu&=\sum_i{X}_{\mu i}\phi_\mu
+\widehat{\phi}_\mu=\sum_i{X}_{\mu i}\phi_\mu
 \end{equation}
 $$
 
@@ -364,8 +364,7 @@ for iter in range(scf_max_iter+1):
 
 We obtain the energy at each step in SCF procedure as follows
 
->
-
+```
 Iteration   1: energy = -73.2285323930, convergence = 1.7533e+00
 Iteration   2: energy = -74.9466685767, convergence = 1.3779e-01
 Iteration   3: energy = -74.9609794584, convergence = 4.2648e-02
@@ -388,11 +387,13 @@ Iteration  19: energy = -74.9617541626, convergence = 3.3064e-08
 Iteration  20: energy = -74.9617541626, convergence = 1.4250e-08
 Iteration  21: energy = -74.9617541626, convergence = 6.1417e-09
 The calculation is converged after  21 iterations.
+```
 
 Although our initial guess is not great, the SCF procedure gradually improves the density and the wavefunction. The first iteration yields an energy of approximately -73.22853 Hartree, and the second iteraction lowered this significantly to -74.94667 Hartree, gaining roughly 1.72 Hartree (or 1079 kcal/mol, a huge improvement!) of additional stabilization. By the 21st iteration, the total energy converges to -74.9617541626 Hartree, with differences in the density matrix on the order of `1e-9`. While the total energy appears to converge by the 14th iteration, the density matrix had not fully converged yet, highlighting that the change in the density matrix is a more sensitive and reliable indicator for SCF convergence. 
 
 Unpack the eigenvalues of the final Fock matrix, we obtain the energy of each molecular orbitals in Hartree, i.e., the energy of one electron in the orbital. 
 
+```
 MO #1: energy = -20.235119550139746.
 MO #2: energy = -1.26077940974714.
 MO #3: energy = -0.623082826896677.
@@ -400,9 +401,11 @@ MO #4: energy = -0.4411608808412172.
 MO #5: energy = -0.38717843286589276.
 MO #6: energy = 0.592813447584928.
 MO #7: energy = 0.7522187844865371.
+```
 
 Notice that the sum of all of the occupied MO energies yields a higher electronic energy because electron-electron repulsion is double counted. Additionally, the five occupied MOs all have negative energies. So, their electrons are bound within the molecule. The unoccupied MOs (called “virtual” MOs) all have positive energies, meaning that the molecule will not spontaneously accept an electron from another source.
 
 ## References
-1. Lecture notes from "Hartree Fock theory" class from Professor Devin Matthews (SMU).
+1. Lecture notes from *Hartree Fock theory* class from Professor Devin Matthews (SMU).
 2. [Hartree-Fock Calculation for Water](https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/The_Live_Textbook_of_Physical_Chemistry_(Peverati)/28%3A_The_Chemical_Bond_in_Polyatomic_Molecules/28.02%3A_Hartree-Fock_Calculation_for_Water)
+3. Computational Chemistry: Introduction to the Theory and Applications of Molecular and Quantum Mechanics, 2nd Edition, Errol G. Lewars (2016).
