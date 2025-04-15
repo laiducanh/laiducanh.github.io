@@ -151,12 +151,13 @@ D = make_guess(nao)
 We are able to construct the first Fock matrix.
 
 ```python
+
 def buildF(H, G, D):
     ## using the indices m and n in lieu of "mu" and "nu" ...
-	## ... initialize the naoxnao matrix P which is the two-electron contribution ...
+    ## ... initialize the naoxnao matrix P which is the two-electron contribution ...
     ## ... calculate the two-electron contribution ...
     ## ... by contracting the density matrix with the two-electron integrals
-	nao = H.shape[0]
+	  nao = H.shape[0]
     P = np.zeros((nao,nao)) 
     for m in range(nao):
         for n in range(nao):
