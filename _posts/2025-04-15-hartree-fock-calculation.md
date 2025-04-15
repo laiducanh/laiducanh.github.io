@@ -28,7 +28,7 @@ $$
 \end{equation}
 $$
 
-where $\mathbf F$ is the Fock matrix, $\mathbf C$ is the matrix of coefficients that determines the molecular orbitals, $\mathbf S$ is the overlap matrix, and $\varepsilon$ contains the eigen-energies of the molecular orbitals. Here $\mathbf F$**, $\mathbf C$** and $\mathbf S$ would have to be $m\times m$ matrices, where $m$ is the number of basis functions. Since there are $m^2$ $*F*$’s, $*c*$’s and $*S*$’s, so ${\varepsilon}$ would be an $m\times m$ diagonal matrix with the nonzero elements $\varepsilon_1, \varepsilon_2,...,\varepsilon_m$. The central task in Hartree-Fock method is to build the Fock matrix, whose elements are computed as follows
+where $\mathbf F$ is the Fock matrix, $\mathbf C$ is the matrix of coefficients that determines the molecular orbitals, $\mathbf S$ is the overlap matrix, and $\varepsilon$ contains the eigen-energies of the molecular orbitals. Here $\mathbf F$, $\mathbf C$ and $\mathbf S$ would have to be $m\times m$ matrices, where $m$ is the number of basis functions. Since there are $m^2$ $F$’s, $c$’s and $S$’s, so ${\varepsilon}$ would be an $m\times m$ diagonal matrix with the nonzero elements $\varepsilon_1, \varepsilon_2,...,\varepsilon_m$. The central task in Hartree-Fock method is to build the Fock matrix, whose elements are computed as follows
 
 $$
 \begin{equation}
