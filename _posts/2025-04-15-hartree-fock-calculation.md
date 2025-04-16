@@ -242,6 +242,7 @@ for m in range(nao):
         for a in range(int(nelec/2)):
             D[m,n] += 2 * (C[m,a] * C[n,a])
 ```
+
 $$
 \mathbf{D}_{new}=\begin{bmatrix} \mathrm{O}\;1s & \mathrm{O}\;2s & \mathrm{O}\;2p_x & \mathrm{O}\;2p_y & \mathrm{O}\;2p_z & \mathrm{H}_a\;1s & \mathrm{H}_b\;1s & \\\ 2.135 & & & & & & &\mathrm{O}\;1s \\\ -0.610 & 2.751 & & & & & &\mathrm{O}\;2s \\\ 0.000 & 0.000 & 2.000 & & & & &\mathrm{O}\;2p_x \\\ 0.000 & 0.000 & 0.000 & 2.397 & & & &\mathrm{O}\;2p_y \\\ 0.006 & -0.358 & 0.000 & 0.000 & 2.196 & & &\mathrm{O}\;2p_z \\\ 0.009 & -0.394 & 0.000 & 0.394 & 0.255 & 0.140 & &\mathrm{H}_a\;1s \\\ 0.009 & -0.394 & 0.000 & -0.394 & 0.255 & 0.001 & 0.140&\mathrm{H}_b\;1s \end{bmatrix}
 $$
