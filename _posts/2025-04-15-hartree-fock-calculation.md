@@ -242,6 +242,9 @@ for m in range(nao):
         for a in range(int(nelec/2)):
             D[m,n] += 2 * (C[m,a] * C[n,a])
 ```
+$$
+\mathbf{D}_{new}=\begin{bmatrix} \mathrm{O}\;1s & \mathrm{O}\;2s & \mathrm{O}\;2p_x & \mathrm{O}\;2p_y & \mathrm{O}\;2p_z & \mathrm{H}_a\;1s & \mathrm{H}_b\;1s & \\\ 2.135 & & & & & & &\mathrm{O}\;1s \\\ -0.610 & 2.751 & & & & & &\mathrm{O}\;2s \\\ 0.000 & 0.000 & 2.000 & & & & &\mathrm{O}\;2p_x \\\ 0.000 & 0.000 & 0.000 & 2.397 & & & &\mathrm{O}\;2p_y \\\ 0.006 & -0.358 & 0.000 & 0.000 & 2.196 & & &\mathrm{O}\;2p_z \\\ 0.009 & -0.394 & 0.000 & 0.394 & 0.255 & 0.140 & &\mathrm{H}_a\;1s \\\ 0.009 & -0.394 & 0.000 & -0.394 & 0.255 & 0.001 & 0.140&\mathrm{H}_b\;1s \end{bmatrix}
+$$
 
 Clearly, the new density matrix is not zero. But is this new density matrix better than our initial guess? If we plug the initial guess $\mathbf{D=0}$ into the equation \eqref{eq:fock2} the Fock matrix element is $F_{\mu\nu}=h_{\mu\nu}$ (that’s why it is called the core Hamiltonian guess). Physically, this means that the electrons have the correct kinetic energy and attraction with the nuclei, but do not interact with the other electrons at all. This is a much harsher approximation than the Hartree-Fock approximation, of course, and gives a very poor description of the molecule. In contrast, a non-zero density matrix does account for some electron correlation and thus provides better approximation to the true electronic structure. 
 
