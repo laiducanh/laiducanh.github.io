@@ -1,5 +1,5 @@
 ---
-title: "Announcement #01: My first blog has arrived"
+title: "My first blog has arrived"
 categories: [Announcement]
 ---
 

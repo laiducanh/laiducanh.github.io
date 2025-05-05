@@ -1,5 +1,5 @@
 ---
-title: "Announcement #04: Looking forward to The 53rd Annual Meeting of the Southeastern Theoretical Chemistry Association (SETCA)"
+title: "Looking forward to The 53rd Annual Meeting of the Southeastern Theoretical Chemistry Association (SETCA)"
 categories: [Announcement]
 tags: [conference]
 image:

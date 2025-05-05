@@ -1,5 +1,5 @@
 ---
-title: "Announcement #03: Looking forward to The 57th ACS DFW Meeting-in-Miniature"
+title: "Looking forward to The 57th ACS DFW Meeting-in-Miniature"
 categories: [Announcement]
 tags: [conference]
 image:
